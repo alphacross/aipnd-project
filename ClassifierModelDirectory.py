@@ -1,4 +1,4 @@
-class ClassifierModel():
+class ClassifierModelDirectory:
     def __init__(self, trainingDir: str, validationDir: str, testDir: str):
         self.trainingDirectory = trainingDir
         self.validationDirectory = validationDir

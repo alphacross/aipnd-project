@@ -1,15 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from torch import nn, optim
-import torch.nn.functional as F
-from torchvision import datasets, models
-from torchvision.transforms import v2
-import time
 import seaborn as sb
 import argparse
-import ClassifierModelDirectory
-import ClassifierModel
+from ClassifierModelDirectory import ClassifierModelDirectory
+from ClassifierModel import ClassifierModel
 
 parser = argparse.ArgumentParser(description = 'training model for flower classification.')
 parser.add_argument('data_dir', help="Set directory for the training data")
@@ -31,6 +26,6 @@ device = 'cuda' if args.gpu != None and args.gpu else 'cpu'
 
 classifierModelDirectory = ClassifierModelDirectory(data_dir + '/train', data_dir + '/valid', data_dir + '/test')
 model = ClassifierModel(arch, 102, classifierModelDirectory, hiddenUnits)
-
-model.Train(epochs, learningRate)
-model.SaveCheckPoint(dir or '')
+print('model created')
+#model.Train(epochs, learningRate)
+#model.SaveCheckPoint(dir or '')

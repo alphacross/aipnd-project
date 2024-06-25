@@ -1,11 +1,11 @@
 from torchvision import datasets, models
 from torchvision.transforms import v2
 from torch import nn, optim, utils, no_grad, exp, mean, FloatTensor, save, load
-import ClassifierModelDirectory
+from ClassifierModelDirectory import ClassifierModelDirectory
 import time
 
-class ClassifierModel():
-    def __init__(self, architecture, outputNo, dataDirectory: ClassifierModelDirectory, useGpu, hiddenUnits):
+class ClassifierModel:
+    def __init__(self, architecture, outputNo, dataDirectory: ClassifierModelDirectory, useGpu, hiddenUnits = None):
         super().__init__()
         self.UseGPU = useGpu
         
@@ -132,8 +132,9 @@ class ClassifierModel():
             'class_to_idx': self.model.class_to_idx,
             'classifier': self.model.classifier,
         }
-
-        save(dir + '/' + checkpoint, modelCheckPointName)
+        if(len(dir) > 0):
+            modelCheckPointName = dir + '/' + modelCheckPointName
+        save(modelCheckPointName, modelCheckPointName)
 
     def LoadModelCheckpoint(self):
         modelCheckPointName = f'{type(self.model).__name__}_modelCheckPoint'
