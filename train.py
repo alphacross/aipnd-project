@@ -25,7 +25,7 @@ epochs = args.epochs or 1
 device = 'cuda' if args.gpu != None and args.gpu else 'cpu'
 
 classifierModelDirectory = ClassifierModelDirectory(data_dir + '/train', data_dir + '/valid', data_dir + '/test')
-model = ClassifierModel(arch, 102, classifierModelDirectory, hiddenUnits)
-print('model created')
-#model.Train(epochs, learningRate)
-#model.SaveCheckPoint(dir or '')
+model = ClassifierModel(arch, 102, classifierModelDirectory, args.gpu != None and args.gpu, hiddenUnits)
+
+model.Train(epochs, learningRate)
+model.SaveCheckPoint(dir or '')

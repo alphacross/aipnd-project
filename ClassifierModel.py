@@ -5,7 +5,7 @@ from ClassifierModelDirectory import ClassifierModelDirectory
 import time
 
 class ClassifierModel:
-    def __init__(self, architecture, outputNo, dataDirectory: ClassifierModelDirectory, useGpu, hiddenUnits = None):
+    def __init__(self, architecture, outputNo, dataDirectory: ClassifierModelDirectory, useGpu, hiddenUnits):
         super().__init__()
         self.UseGPU = useGpu
         
@@ -67,8 +67,8 @@ class ClassifierModel:
         criterion = nn.NLLLoss()
         optimizer = optim.Adam(params = self.model.classifier.parameters(), lr = learningRate)
 
-        for e in epochs:
-            startTime = time()
+        for e in range(epochs):
+            startTime = time.time()
             print(f"Begin training {e + 1}/{epochs}.")
             self.model.train()
             
@@ -91,7 +91,7 @@ class ClassifierModel:
                 print()
                 validationLoss, accuracy = self.Validate(self.validationDataLoaders)
 
-                endTime = time()
+                endTime = time.time()
                 elapsedTime = endTime - startTime
                 print(f'Elapsed {int(elapsedTime // 60)}:{int(elapsedTime % 60)}')
             
@@ -132,9 +132,9 @@ class ClassifierModel:
             'class_to_idx': self.model.class_to_idx,
             'classifier': self.model.classifier,
         }
-        if(len(dir) > 0):
+        if(dir is not None and dir != ''):
             modelCheckPointName = dir + '/' + modelCheckPointName
-        save(modelCheckPointName, modelCheckPointName)
+        save(checkpoint, modelCheckPointName)
 
     def LoadModelCheckpoint(self):
         modelCheckPointName = f'{type(self.model).__name__}_modelCheckPoint'
